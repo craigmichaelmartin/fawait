@@ -25,5 +25,5 @@ let [data, typeError, customBadThing] = await fa(promise, TypeError, BadThing);
 ## Alternatives / Prior Art
 
 - [`fPromise`](https://github.com/craigmichaelmartin/fpromise) which is a heavier-weight promise solution.
-- [`safe-await`](https://github.com/DavidWells/safe-await) which converts all errors to this functional form.
-- [`go-for-it`](https://github.com/gunar/go-for-it) which converts all non-native errors to this functional form.
+- [`go-for-it`](https://github.com/gunar/go-for-it) and [`safe-await`](https://github.com/DavidWells/safe-await) which convert all non-native errors to this functional form.
+- [`await-to-js`](https://github.com/scopsy/await-to-js) which converts all errors to this functional form.
