@@ -11,9 +11,20 @@ const fa = (promise, ...Errs) =>
     }
   );
 
+const swallow = (promise, fallbackValue) =>
+  promise.then(val => val, _err => fallbackValue);
+
+const tapError = (promise, tapFn) =>
+  promise.then(
+    val => val,
+    err => {
+      tapFn(err);
+      throw err;
+    }
+  );
+
 module.exports = {
-  // I don't know what alias is short and sweet and that people will want
-  safe: fa,
-  fp: fa,
-  fa
+  fa,
+  swallow,
+  tapError
 };
