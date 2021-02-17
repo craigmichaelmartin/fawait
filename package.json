@@ -1,6 +1,6 @@
 {
   "name": "fawait",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "browser": "src/index.js",
   "main": "src/index.js",
   "types": "fawait.d.ts",
