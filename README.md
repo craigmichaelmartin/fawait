@@ -46,7 +46,7 @@ separate parameters, because, well, its so easy to implement why not?
 ```javascript
 const [data, typeError, myError] = await fa(
   somePromiseReturningFunctionThatIsKindaLong(oh, and, has, some, params),
-  [TypeError, MyError],
+  [TypeError, MyError]
 );
 ```
 
