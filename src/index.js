@@ -1,15 +1,21 @@
-const fa = (promise, ...Errs) =>
-  promise.then(
+const fa = (promise, ..._Errs) => {
+  const Errs = Array.isArray(_Errs[0]) ? _Errs[0] : _Errs;
+  return promise.then(
     val => [val],
     err => {
-      for (const [index, Err] of Errs.entries()) {
-        if (err instanceof Err) {
-          return [...Array.from(Array(index + 1), () => void 0), err];
+      if (Errs.length) {
+        for (const [index, Err] of Errs.entries()) {
+          if (err instanceof Err) {
+            return [...Array.from(Array(index + 1), () => void 0), err];
+          }
         }
+        throw err;
+      } else {
+        return [void 0, err];
       }
-      throw err;
     }
   );
+};
 
 const swallow = (promise, fallbackValue) =>
   promise.then(val => val, _err => fallbackValue);
