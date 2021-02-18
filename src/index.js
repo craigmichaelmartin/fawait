@@ -17,8 +17,14 @@ const fa = (promise, ..._Errs) => {
   );
 };
 
-const swallow = (promise, fallbackValue) =>
-  promise.then(val => val, _err => fallbackValue);
+const swallow = (promise, fallbackValue, effect) =>
+  promise.then(
+    val => val,
+    _err => {
+      typeof effect === 'function' && effect();
+      return fallbackValue;
+    }
+  );
 
 const tapError = (promise, tapFn) =>
   promise.then(

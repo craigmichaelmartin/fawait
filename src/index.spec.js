@@ -200,15 +200,23 @@ test('`fa` - promise rejects, three errors listed and its last [DUPLICATE FOR AR
 
 test('`swallow` - promise resolves', async () => {
   expect.assertions(1);
-  const data = await swallow(Promise.resolve('foo'), 'bar');
+  const shouldNotBeCalled = () => { throw 'This should not fire'; };
+  const data = await swallow(Promise.resolve('foo'), 'bar', shouldNotBeCalled);
   expect(data).toEqual('foo');
 });
 
 // Rejects --------------------------------------------------------------------
 
-test('`swallow` - promise rejects', async () => {
+test('`swallow` - promise rejects with no effect function', async () => {
   expect.assertions(1);
   const data = await swallow(Promise.reject('foo'), 'bar');
+  expect(data).toEqual('bar');
+});
+
+test('`swallow` - promise rejects and has effect function', async () => {
+  expect.assertions(2);
+  const shouldBeCalled = () => expect('called').toEqual('called');
+  const data = await swallow(Promise.reject('foo'), 'bar', shouldBeCalled);
   expect(data).toEqual('bar');
 });
 
