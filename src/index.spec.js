@@ -215,7 +215,7 @@ test('`swallow` - promise rejects with no effect function', async () => {
 
 test('`swallow` - promise rejects and has effect function', async () => {
   expect.assertions(2);
-  const shouldBeCalled = () => expect('called').toEqual('called');
+  const shouldBeCalled = (err) => expect(err).toEqual('foo');
   const data = await swallow(Promise.reject('foo'), 'bar', shouldBeCalled);
   expect(data).toEqual('bar');
 });
