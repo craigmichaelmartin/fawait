@@ -39,7 +39,7 @@ const [data, error] = await fa(promise);
 
 Read about it: [Making Await More Functional in JavaScript](https://dev.to/craigmichaelmartin/making-await-more-functional-in-javascript-2le4)
 
-TLDR example:
+TLDR contrived example:
 
 ```javascript
 const getArticleEndpoint = async (req, res) => {
