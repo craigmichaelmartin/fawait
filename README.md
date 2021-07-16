@@ -43,7 +43,7 @@ TLDR contrived example:
 
 ```javascript
 const getArticleEndpoint = async (req, res) => {
-  // 1. This code is short and readable, and is specific with errors it's catching
+  // This code is short and readable, and is specific with errors it's catching
   const [article, queryResultError] = await fa(getArticle(slug), QueryResultError);
   if (queryResultsError) {
     return res.sendStatus(404);
@@ -58,7 +58,7 @@ Without `fAwait` there may be a temptation to write this:
 
 ```javascript
 const getArticleEndpoint = async (req, res) => {
-  // 1. This code looks short and readable, but is not equivalent.
+  // This code looks short and readable, but is not equivalent.
   try {
     const article = await getArticle(slug);
     await article.incrementReadCount();
@@ -78,18 +78,18 @@ which is catching too much code. And if realized, may then become:
 
 ```javascript
 const getArticleEndpoint = (req, res) => {
-  // 1. This code feels like it is working against the language -
-  //    declaring a variable ahead of time to escape a scoping issue
-  //    of having to attempt our function in a try block - but is correct.
+  // This code feels like it is working against the language -
+  // declaring a variable ahead of time to escape a scoping issue
+  // of having to attempt our function in a try block - but is correct.
   let article;
   try {
     article = await getArticle(slug);
   } catch (error) {
-    // 2. This is still too broad, and could errantly send a 404 for other
-    //    types of errors (for example a simple typo in the getArticle,
-    //    which if it were sync would blow up right away, but since it
-    //    is async now bubbles up here) again potentially wasting developer
-    //    time going down the wrong path of looking into the article and slug.
+    // This is still too broad, and could errantly send a 404 for other
+    // types of errors (for example a simple typo in the getArticle,
+    // which if it were sync would blow up right away, but since it
+    // is async now bubbles up here) again potentially wasting developer
+    // time going down the wrong path of looking into the article and slug.
     return res.sendStatus(404);
   }
   article.incrementReadCount();
@@ -106,18 +106,18 @@ And so we'd finally get to the equivalent code:
 
 ```javascript
 const getArticleEndpoint = (req, res) => {
-  // 1. This code feels like it is working against the language -
-  //    declaring a variable ahead of time to escape a scoping issue
-  //    of having to attempt our function in a try block - but is correct.
+  // This code feels like it is working against the language -
+  // declaring a variable ahead of time to escape a scoping issue
+  // of having to attempt our function in a try block - but is correct.
   let article;
   try {
     article = getArticle(slug);
   } catch (error) {
-    // 2. We remember to check the error
+    // We remember to check the error
     if (error instanceof QueryResultError) {
       return res.sendStatus(404);
     }
-    // and to throw the error if not our type
+    // and to re-throw the error if not our type
     throw error;
   }
   article.incrementReadCount();
