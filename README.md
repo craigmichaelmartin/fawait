@@ -147,7 +147,7 @@ In addtion to the `fa` function described above, `fAwait` includes two other uti
 Swallow returns the value the promise resolves to, or else a default value you provide. It will never throw an error. It may also take a function that is called with the error.
 
 ```javascript
-const { fa } = require('fawait');
+const { swallow } = require('fawait');
 const { logError } = require('./logging');
 const greeting = await swallow(getGreeting(), 'Hey There!', logError);
 // If the promise resolves, greeting will be the value.
