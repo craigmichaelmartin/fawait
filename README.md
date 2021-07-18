@@ -160,7 +160,7 @@ const greeting = await swallow(getGreeting(), 'Hey There!', logError);
 `tapError` is a function that is called with the error only if the promise rejects. It does not handle the error - the original error is received, but allows some side effect on that error. This is useful when an error traverses through many "layers" in the program (EG, db -> dao -> service -> controller), and each layer may easily perform side-effects regarding what the error means for it without needing to account for its journey.
 
 ```javascript
-const { tapError, fa } = require('fawait');
+const { tapError } = require('fawait');
 const getOne = (data) => tapError(db.one(data), logError);
 // If the promise resolves, the value will be returned.
 // If the promise rejects, the rejected promise will be returned but with the error already logged.
