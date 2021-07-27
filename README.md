@@ -50,8 +50,8 @@ const getArticleEndpoint = async (req, res) => {
   }
   await article.incrementReadCount();
   const json = article.serializeForAPI();
-  res.status(200).json(json);;
-}
+  res.status(200).json(json);
+};
 ```
 
 Without `fAwait` there may be a temptation to write this:
@@ -71,7 +71,7 @@ const getArticleEndpoint = async (req, res) => {
     // when really it could be the other methods.
     res.sendStatus(404);
   }
-}
+};
 ```
 
 which is catching too much code. And if realized, may then become:
@@ -97,7 +97,7 @@ const getArticleEndpoint = (req, res) => {
 }
 ```
 
-which is better, but still catching too broadly - and *especially* in the case
+which is better, but still catching too broadly - and _especially_ in the case
 of async code (where simple programing typos/mistakes/errors do not blow up the
 program, but get passed along with the rejection path and so neccesitates really
 strict analysis of these errors).
@@ -122,9 +122,8 @@ const getArticleEndpoint = (req, res) => {
   }
   article.incrementReadCount();
   res.send(article.serializeForAPI());
-}
+};
 ```
-
 
 ## Alternate API
 
@@ -161,7 +160,7 @@ const greeting = await swallow(getGreeting(), 'Hey There!', logError);
 
 ```javascript
 const { tapError } = require('fawait');
-const getOne = (data) => tapError(db.one(data), logError);
+const getOne = data => tapError(db.one(data), logError);
 // If the promise resolves, the value will be returned.
 // If the promise rejects, the rejected promise will be returned but with the error already logged.
 ```
