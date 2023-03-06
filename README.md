@@ -111,10 +111,11 @@ const getArticleEndpoint = (req, res) => {
   // of having to attempt our function in a try block - but is correct.
   let article;
   try {
-    article = getArticle(slug);
+    article = await getArticle(slug);
   } catch (error) {
     // We remember to check the error
     if (error instanceof QueryResultError) {
+      // and to early return
       return res.sendStatus(404);
     }
     // and to re-throw the error if not our type
